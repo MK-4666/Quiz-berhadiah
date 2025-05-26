@@ -1,0 +1,181 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Tes Kepribadian Akademik Mahasiswa</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #eef2f3, #c9d6ff);
+      margin: 0;
+      padding: 20px;
+    }
+    .container {
+      background: #fff;
+      max-width: 700px;
+      margin: 30px auto;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    }
+    h1, h2 {
+      text-align: center;
+      color: #333;
+    }
+    .hidden {
+      display: none;
+    }
+    input[type="text"] {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0 20px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 16px;
+    }
+    .question {
+      background: #f0f7ff;
+      border-left: 5px solid #3399ff;
+      padding: 15px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+    }
+    label {
+      display: block;
+      margin: 8px 0;
+    }
+    button {
+      background-color: #3399ff;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      padding: 12px 18px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background 0.3s;
+      margin-top: 10px;
+    }
+    button:hover {
+      background-color: #267acc;
+    }
+    .result {
+      background: #eaffea;
+      border: 1px solid #b2ffb2;
+      padding: 20px;
+      border-radius: 8px;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Tes Kepribadian Akademik</h1>
+
+    <div id="namePage">
+      <p>Masukkan Nama :</p>
+      <input type="text" id="username" placeholder=" " />
+      <button onclick="startQuiz()">Mulai Tes</button>
+    </div>
+
+    <div id="quizPage" class="hidden">
+      <div class="question">
+        <p>1. Siapa Mahasiswa Paling Ganteng?</p>
+        <label><input type="radio" name="q1" value="1" /> Ncek (Rifky)</label>
+        <label><input type="radio" name="q1" value="2" /> Rifky (Ncek)</label>
+        <label><input type="radio" name="q1" value="3" /> Rifky Rahmat Dziaulhak</label>
+        <label><input type="radio" name="q1" value="4" /> Semuanya Benar</label>
+      </div>
+      <div class="question">
+        <p>2. Apakah dia sangat ganteng?</p>
+        <label><input type="radio" name="q2" value="1" /> Iya Sangat</label>
+        <label><input type="radio" name="q2" value="2" /> Ganteng Banget</label>
+        <label><input type="radio" name="q2" value="3" /> Ganteng Ga Boong</label>
+        <label><input type="radio" name="q2" value="4" /> Semua Benar</label>
+      </div>
+      <div class="question">
+        <p>3. Siapa Mahasiswa Paling Keren?</p>
+        <label><input type="radio" name="q3" value="1" /> Si Ncek</label>
+        <label><input type="radio" name="q3" value="2" /> Rifky</label>
+        <label><input type="radio" name="q3" value="3" /> Rifky Rahmat Dziaulhak</label>
+        <label><input type="radio" name="q3" value="4" /> Semua Benar</label>
+      </div>
+      <div class="question">
+        <p>4. Apakah Rifky Kalcer?</p>
+        <label><input type="radio" name="q4" value="1" /> Jelas Gak Perlu Tanya</label>
+        <label><input type="radio" name="q4" value="2" /> Sipaling Kalcer</label>
+        <label><input type="radio" name="q4" value="3" /> Kalcer Banget</label>
+        <label><input type="radio" name="q4" value="4" /> Semua Benar</label>
+      </div>
+      <div class="question">
+        <p>5. Mirip Iqbal Ramadhan?</p>
+        <label><input type="radio" name="q5" value="1" /> Mirip Banget</label>
+        <label><input type="radio" name="q5" value="2" /> Gabisa Ngebedain</label>
+        <label><input type="radio" name="q5" value="3" /> Kirain Iqbal yang mirip Rifky</label>
+        <label><input type="radio" name="q5" value="4" /> Semua Benar</label>
+      </div>
+      <button onclick="showResult()">Lihat Hasil</button>
+    </div>
+
+    <div id="resultPage" class="result hidden">
+      <h2>Hasil Tes Kamu, <span id="nameResult"></span>:</h2>
+      <p id="resultText"></p>
+      <button onclick="shareToWhatsApp()">Bagikan ke WhatsApp</button>
+    </div>
+  </div>
+
+  <script>
+    let userName = "";
+
+    function startQuiz() {
+      const nameInput = document.getElementById("username").value.trim();
+      if (nameInput === "") {
+        alert("Isi nama dulu ya 😅");
+        return;
+      }
+      userName = nameInput;
+      document.getElementById("namePage").classList.add("hidden");
+      document.getElementById("quizPage").classList.remove("hidden");
+    }
+
+    function showResult() {
+      let total = 0;
+      for (let i = 1; i <= 5; i++) {
+        const answer = document.querySelector(`input[name="q${i}"]:checked`);
+        if (answer) total += parseInt(answer.value);
+      }
+
+      let resultLabel = "";
+      let resultDesc = "";
+      if (total <= 5) {
+        resultLabel = "CUIHH NILAI SiA NGAN 50";
+        resultDesc = "Nasehat Dari Abang: ‘Belajar lagi Yang Banyak DEKKKK.’";
+      } else if (total <= 10) {
+        resultLabel = "DEK DEK NILAI MNH 75";
+        resultDesc = " ‘banyakin minum CIU & INEX.’";
+      } else if (total <= 15) {
+        resultLabel = "Selamat Nilai Maneh 95";
+        resultDesc = "Hadiah 10k(dipotong pajak nya) ‘SS Kirim Ka Abang Ncek’";
+      } else {
+        resultLabel = "NILAI KAMU 1000000000000000000000000000000000000000000000000000000000000000000";
+        resultDesc = "Selamat Anda mendapatkan 50 ribu silahkan SS ini dan kirim ke abang ncek";
+      }
+
+      document.getElementById("quizPage").classList.add("hidden");
+      document.getElementById("resultPage").classList.remove("hidden");
+      document.getElementById("nameResult").innerText = userName;
+      document.getElementById("resultText").innerHTML = `
+        <strong>${resultLabel}</strong><br>${resultDesc}
+      `;
+      window.finalResult = `${userName} adalah ${resultLabel}\n${resultDesc}`;
+    }
+
+    function shareToWhatsApp() {
+      const text = encodeURIComponent(`Hasil Tes Kepribadian Akademik-ku:\n${window.finalResult}\n\nCek quiz-nya juga yuk!`);
+      const url = `https://wa.me/?text=${text}`;
+      window.open(url, "_blank");
+    }
+  </script>
+</body>
+</html>
